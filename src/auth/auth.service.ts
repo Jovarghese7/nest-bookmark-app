@@ -16,7 +16,9 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
   ) {}
-  async signin(dto: AuthDto) {
+  async signin(
+    dto: AuthDto,
+  ): Promise<{ access_token: string }> {
     //find the user by email
     const user =
       await this.prisma.user.findUnique({
@@ -42,7 +44,9 @@ export class AuthService {
     return this.signToken(user.id, user.email);
   }
 
-  async signup(dto: AuthDto) {
+  async signup(
+    dto: AuthDto,
+  ): Promise<{ access_token: string }> {
     // Generate the Hash
     const hash = await argon.hash(dto.password);
 
